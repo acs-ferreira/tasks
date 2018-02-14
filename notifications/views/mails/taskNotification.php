@@ -2,7 +2,6 @@
 
 use humhub\modules\task\widgets\MailContentEntry;
 
-
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2017 HumHub GmbH & Co. KG
@@ -33,7 +32,7 @@ use humhub\modules\task\widgets\MailContentEntry;
             <?=
             humhub\widgets\mails\MailHeadline::widget([
                 'level' => 3,
-                'text' => $contentRecord->getContentName().':',
+                'text' => $contentRecord->getContentName() . ':',
                 'style' => 'text-transform:capitalize;'
             ])
             ?>

@@ -37,7 +37,7 @@ class Events extends Object
     {
         $contentContainer = $event->contentContainer;
 
-        if(!$contentContainer || $contentContainer->isModuleEnabled('task')) {
+        if (!$contentContainer || $contentContainer->isModuleEnabled('task')) {
             TaskCalendar::addItemTypes($event);
         }
     }
@@ -49,7 +49,7 @@ class Events extends Object
     {
         $contentContainer = $event->contentContainer;
 
-        if(!$contentContainer || $contentContainer->isModuleEnabled('task')) {
+        if (!$contentContainer || $contentContainer->isModuleEnabled('task')) {
             TaskCalendar::addItems($event);
         }
     }
@@ -74,7 +74,6 @@ class Events extends Object
         $space = $event->sender->space;
 
         if ($space->isModuleEnabled('task') && $space->isMember()) {
-
             $event->sender->addItem([
                 'label' => Yii::t('TaskModule.base', 'Tasks'),
                 'group' => 'modules',
@@ -94,12 +93,12 @@ class Events extends Object
     public static function onIntegrityCheck($event)
     {
         $integrityController = $event->sender;
-        $integrityController->showTestHeadline("Tasks Module - Entries (" . Task::find()->count() . " entries)");
+        $integrityController->showTestHeadline('Tasks Module - Entries (' . Task::find()->count() . ' entries)');
 
         // check for taskItems without task
         foreach (TaskItem::find()->all() as $taskItem) {
             if ($taskItem->task === null) {
-                if ($integrityController->showFix("Deleting task item id " . $taskItem->id . " without existing task!")) {
+                if ($integrityController->showFix('Deleting task item id ' . $taskItem->id . ' without existing task!')) {
                     $taskItem->delete();
                 }
             }
@@ -108,12 +107,12 @@ class Events extends Object
         // check for task responsible users without task or existing user
         foreach (TaskResponsible::find()->all() as $taskResponsible) {
             if ($taskResponsible->task === null) {
-                if ($integrityController->showFix("Deleting task responsible user id " . $taskResponsible->id . " without existing task!")) {
+                if ($integrityController->showFix('Deleting task responsible user id ' . $taskResponsible->id . ' without existing task!')) {
                     $taskResponsible->delete();
                 }
             }
             if ($taskResponsible->user === null) {
-                if ($integrityController->showFix("Deleting task responsible user id " . $taskResponsible->id . " without existing user!")) {
+                if ($integrityController->showFix('Deleting task responsible user id ' . $taskResponsible->id . ' without existing user!')) {
                     $taskResponsible->delete();
                 }
             }
@@ -122,12 +121,12 @@ class Events extends Object
         // check for task assigned users without task or existing user
         foreach (TaskAssigned::find()->all() as $taskAssigned) {
             if ($taskAssigned->task === null) {
-                if ($integrityController->showFix("Deleting task assigned user id " . $taskAssigned->id . " without existing task!")) {
+                if ($integrityController->showFix('Deleting task assigned user id ' . $taskAssigned->id . ' without existing task!')) {
                     $taskAssigned->delete();
                 }
             }
             if ($taskAssigned->user === null) {
-                if ($integrityController->showFix("Deleting task assigned user id " . $taskAssigned->id . " without existing user!")) {
+                if ($integrityController->showFix('Deleting task assigned user id ' . $taskAssigned->id . ' without existing user!')) {
                     $taskAssigned->delete();
                 }
             }
@@ -136,7 +135,7 @@ class Events extends Object
         // check for task reminders without task
         foreach (TaskReminder::find()->all() as $taskReminder) {
             if ($taskReminder->task === null) {
-                if ($integrityController->showFix("Deleting task reminder id " . $taskReminder->id . " without existing task!")) {
+                if ($integrityController->showFix('Deleting task reminder id ' . $taskReminder->id . ' without existing task!')) {
                     $taskReminder->delete();
                 }
             }
@@ -147,11 +146,10 @@ class Events extends Object
     public static function onCronRun($event)
     {
         if (Yii::$app->controller->action->id == 'hourly') {
-            Yii::$app->queue->push( new SendReminder());
+            Yii::$app->queue->push(new SendReminder());
         }
 //        if (Yii::$app->controller->action->id == 'hourly') {
 //            Yii::$app->queue->push( new SendReminder() );
 //        }
     }
-
 }

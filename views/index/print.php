@@ -14,7 +14,7 @@ use humhub\modules\tasks\models\Task;
         at <?= substr($task->begin, 0, 5); ?> - <?= substr($task->end, 0, 5); ?>
         <?= Html::encode($task->location) ?> <?php
         if ($task->room != null) {
-            echo "(" . Html::encode($task->room) . ")";
+            echo '(' . Html::encode($task->room) . ')';
         }
         ?>
     </h2>
@@ -22,9 +22,9 @@ use humhub\modules\tasks\models\Task;
     <em><strong><?= Yii::t('TaskModule.views_index_index', 'Participants') ?>:</strong></em><br>
 
     <?=
-    implode(", ", array_map(function ($p) {
+    implode(', ', array_map(function ($p) {
                 return ($p->getUser()) ? Html::encode($p->getUser()->displayName) : Html::encode($p->name);
-            }, $task->participants));
+    }, $task->participants));
     ?>
     <?php if ($task->external_participants != null) : ?>
         <br><br>
@@ -38,18 +38,18 @@ use humhub\modules\tasks\models\Task;
 <div class="task-details">
     <div class="task-item-container">
         <div class="agenda-time-line">
-            <?php foreach ($task->items as $item): ?>
+            <?php foreach ($task->items as $item) : ?>
                 <div class="agenda-point"><i style="font" class="fa fa-circle" aria-hidden="true"></i></div>
                 <div style="margin-left:40px;padding-right:15px;">
                     
                     <!-- Title + Description start -->
                     <h1>
-                        <?php if ($item->begin != "00:00" && $item->end != "00:00") : ?>
+                        <?php if ($item->begin != '00:00' && $item->end != '00:00') : ?>
                             <?= Html::encode($item->getTimeRangeText()); ?> -
                         <?php endif; ?>
                         <?= Html::encode($item->title); ?>
                     </h1>
-                    <?= \humhub\widgets\MarkdownView::widget(array('markdown' => $item->description)); ?>
+                    <?= \humhub\widgets\MarkdownView::widget(['markdown' => $item->description]); ?>
                     <!-- Title + Description end -->
                     
                     <br />
@@ -64,14 +64,14 @@ use humhub\modules\tasks\models\Task;
                             </td>
                             <td style="vertical-align: top;">
                                 <?=
-                                implode(", ", array_map(function ($p) {
+                                implode(', ', array_map(function ($p) {
                                             return ($p->getUser()) ? Html::encode($p->user->displayName) : Html::encode($p->name);
-                                        }, $item->moderators));
+                                }, $item->moderators));
                                 ?>
                                 <?php if ($item->external_moderators != null) : ?>
                                     <?php
                                     if (count($item->moderators) != 0) {
-                                        echo ", ";
+                                        echo ', ';
                                     }
                                     ?>
                                     <?= $item->external_moderators; ?>
@@ -86,7 +86,7 @@ use humhub\modules\tasks\models\Task;
                                 <td style="vertical-align: top;">
                                     <strong><?= Yii::t('TaskModule.views_index_index', 'Protocol'); ?></strong>:
                                 </td>
-                                <td style="vertical-align: top;"><?= \humhub\widgets\MarkdownView::widget(array('markdown' => $item->notes)); ?></td>
+                                <td style="vertical-align: top;"><?= \humhub\widgets\MarkdownView::widget(['markdown' => $item->notes]); ?></td>
                             </tr>
                         <?php endif; ?>
                         <!-- PROTOCOL end -->
@@ -96,11 +96,11 @@ use humhub\modules\tasks\models\Task;
                             <tr>
                                 <td style="vertical-align: top;"><strong><?= Yii::t('TaskModule.views_index_index', 'Tasks'); ?></strong>:</td>
                                 <td style="vertical-align: top;">
-                                    <?php foreach ($item->getTasks() as $task): ?>
-                                        <?php $taskStatus = ($task->status == Task::STATUS_FINISHED) ? "finished" : "open"; ?>
-                                        <?php if ($taskStatus == "open") : ?>
+                                    <?php foreach ($item->getTasks() as $task) : ?>
+                                        <?php $taskStatus = ($task->status == Task::STATUS_FINISHED) ? 'finished' : 'open'; ?>
+                                        <?php if ($taskStatus == 'open') : ?>
                                             <i class="fa fa-square-o"> </i>
-                                        <?php else: ?>
+                                        <?php else : ?>
                                             <i class="fa fa-check-square-o"> </i>
                                         <?php endif; ?>
                                             
@@ -110,11 +110,11 @@ use humhub\modules\tasks\models\Task;
                                             (
                                             <?php
                                                 $timestamp = strtotime($task->deadline);
-                                                $style = "";
+                                                $style = '';
 
-                                                if (date("d.m.yy", $timestamp) <= date("d.m.yy", time())) {
-                                                    $style = "label label-danger";
-                                                }
+                                            if (date('d.m.yy', $timestamp) <= date('d.m.yy', time())) {
+                                                $style = 'label label-danger';
+                                            }
                                             ?>
                                             <span style="<?= $style; ?>"><?= Yii::$app->formatter->asDate(new DateTime($task->deadline), 'short'); ?></span>
                                             )
@@ -125,9 +125,9 @@ use humhub\modules\tasks\models\Task;
                                         <?php if (count($assignedUsers) != 0) : ?>
                                             &nbsp;<i class="fa fa-caret-right" aria-hidden="true"></i>&nbsp;
                                             <?=
-                                            implode(", ", array_map(function ($p) {
+                                            implode(', ', array_map(function ($p) {
                                                         return Html::encode($p->displayName);
-                                                    }, $assignedUsers));
+                                            }, $assignedUsers));
                                             ?>
 
                                         <?php endif; ?><br>
@@ -143,7 +143,7 @@ use humhub\modules\tasks\models\Task;
                 <div class="print-body">
                 <hr>
                 </div>
-<?php endforeach; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

@@ -2,7 +2,6 @@
 
 namespace humhub\modules\task;
 
-
 use Yii;
 use yii\helpers\Url;
 use humhub\modules\task\permissions\ManageTasks;

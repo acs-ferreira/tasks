@@ -15,7 +15,6 @@
 
 namespace humhub\modules\task\widgets;
 
-
 use humhub\modules\task\models\Task;
 use humhub\widgets\JsWidget;
 use yii\helpers\Url;
@@ -71,6 +70,4 @@ class TaskItemList extends JsWidget
             'can-edit' => $this->canEdit
         ];
     }
-
-
 }

@@ -32,7 +32,7 @@ class NotifyResponsible extends BaseNotification
     /**
      * @inheritdoc
      */
-    public $viewName = "taskNotification";
+    public $viewName = 'taskNotification';
 
     /**
      *  @inheritdoc
@@ -42,7 +42,8 @@ class NotifyResponsible extends BaseNotification
         return new TaskNotificationCategory();
     }
     
-    public function html() {
+    public function html()
+    {
         return Yii::t('TaskModule.views_notifications_invited', '{userName} assigned you as responsible person in task {task} from space {spaceName}.', [
             '{userName}' => Html::tag('strong', Html::encode($this->originator->displayName)),
             '{task}' => Html::tag('strong', Html::encode($this->getContentInfo($this->source, false))),

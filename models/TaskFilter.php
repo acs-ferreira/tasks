@@ -21,12 +21,12 @@ class TaskFilter extends Task
 
     /**
      * Default implementation for user picker filter.
-     * 
+     *
      * @param type $keywords
      * @param type $maxResults
      * @param type $friendsOnly
      * @param type $permission
-     * @deprecated since 1.2 use 
+     * @deprecated since 1.2 use
      * @return type
      */
     public function getTaskPickerResult($keywords = null, $maxResults = null, $permission = null)
@@ -49,7 +49,7 @@ class TaskFilter extends Task
 
     /**
      * Searches for all active users by the given keyword and permission.
-     * 
+     *
      * @param type $keywords
      * @param type $maxResults
      * @param type $permission
@@ -66,7 +66,7 @@ class TaskFilter extends Task
      * are added to the provided $query. The $keyword filter can be used to filter the users
      * by email, username, firstname, lastname and title. By default this functions does not
      * consider inactive user.
-     * 
+     *
      * @param type $query
      * @param type $keywords
      * @param type $maxResults
@@ -119,7 +119,7 @@ class TaskFilter extends Task
     /**
      * Returns a subset of the given array containing all users of the given set
      * which are permitted. If the permission is null this method returns the
-     * 
+     *
      * @param type $users
      * @param type $permission
      * @return type

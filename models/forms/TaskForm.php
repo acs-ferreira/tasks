@@ -78,7 +78,7 @@ class TaskForm extends Model
         $this->timeZone = empty($this->timeZone) ? Yii::$app->formatter->timeZone : $this->timeZone;
 
         if ($this->task) {
-            if($this->task->all_day) {
+            if ($this->task->all_day) {
                 $this->timeZone = $this->task->time_zone;
             }
 //            $this->translateToUserTimeZone();
@@ -100,12 +100,12 @@ class TaskForm extends Model
             [['end_date'], DbDateValidator::className(), 'format' => Yii::$app->params['formatter']['defaultDateFormat'], 'timeAttribute' => 'end_time', 'timeZone' => $this->timeZone],
             [['end_date'], 'validateEndTime'],
 
-            [['start_date', 'end_date'], 'required', 'when' => function($model) {
+            [['start_date', 'end_date'], 'required', 'when' => function ($model) {
                 return $model->task->scheduling == 1;
             }, 'whenClient' => "function (attribute, value) {
                 return $('#task-scheduling').val() == 1;
             }"],
-            [['start_time', 'end_time'], 'required', 'when' => function($model) {
+            [['start_time', 'end_time'], 'required', 'when' => function ($model) {
                 return $model->task->all_day == 0;
             }, 'whenClient' => "function (attribute, value) {
                 return $('#task-all_day').val() == 0;
@@ -130,11 +130,11 @@ class TaskForm extends Model
     {
         Yii::$app->formatter->timeZone = $this->timeZone;
         
-        if($this->task->all_day) {
+        if ($this->task->all_day) {
             $date = new DateTime('now', new DateTimeZone($this->timeZone));
-            $date->setTime(0,0);
+            $date->setTime(0, 0);
             $this->start_time = Yii::$app->formatter->asTime($date, $this->getTimeFormat());
-            $date->setTime(23,59);
+            $date->setTime(23, 59);
             $this->end_time = Yii::$app->formatter->asTime($date, $this->getTimeFormat());
         }
         Yii::$app->i18n->autosetLocale();
@@ -172,8 +172,8 @@ class TaskForm extends Model
 
     public function getTitle()
     {
-        if($this->task->isNewRecord) {
-           return Yii::t('TaskModule.views_index_edit', '<strong>Create</strong> new task');
+        if ($this->task->isNewRecord) {
+            return Yii::t('TaskModule.views_index_edit', '<strong>Create</strong> new task');
         }
 
         return Yii::t('TaskModule.views_index_edit', '<strong>Edit</strong> task');
@@ -206,16 +206,16 @@ class TaskForm extends Model
     public function load($data, $formName = null)
     {
         // Make sure we load the timezone beforehand so its available in validators etc..
-        if($data && isset($data[$this->formName()]) && isset($data[$this->formName()]['timeZone']) && !empty($data[$this->formName()]['timeZone'])) {
+        if ($data && isset($data[$this->formName()]) && isset($data[$this->formName()]['timeZone']) && !empty($data[$this->formName()]['timeZone'])) {
             $this->timeZone = $data[$this->formName()]['timeZone'];
         }
-        if(parent::load($data) && !empty($this->timeZone)) {
+        if (parent::load($data) && !empty($this->timeZone)) {
             $this->task->time_zone = $this->timeZone;
         }
 
         $this->task->content->visibility = $this->is_public;
 
-        if(!$this->task->load($data)) {
+        if (!$this->task->load($data)) {
             return false;
         }
 
@@ -240,7 +240,7 @@ class TaskForm extends Model
      */
     public function save()
     {
-        if(!$this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 
@@ -251,7 +251,7 @@ class TaskForm extends Model
         // The form expects user time zone, so we translate back from app to user timezone
         $this->translateDateTimes($this->task->start_datetime, $this->task->end_datetime, Yii::$app->timeZone, $this->timeZone);
 
-        if($this->task->save()) {
+        if ($this->task->save()) {
 //            $this->task->fileManager->attach($this->task->files);
             return true;
         }
@@ -291,7 +291,7 @@ class TaskForm extends Model
      */
     public function translateDateTimes($start = null, $end = null, $sourceTimeZone = null, $targetTimeZone = null, $dateFormat = 'php:Y-m-d H:i:s e')
     {
-        if(!$start) {
+        if (!$start) {
             return;
         }
 
@@ -307,7 +307,7 @@ class TaskForm extends Model
         // Fix FullCalendar EndTime
         if (CalendarUtils::isFullDaySpan($startTime, $endTime, true)) {
             // In Fullcalendar the EndTime is the moment AFTER the event so we substract one second
-            $endTime->sub(new DateInterval("PT1S"));
+            $endTime->sub(new DateInterval('PT1S'));
             $this->task->all_day = 1;
         }
 

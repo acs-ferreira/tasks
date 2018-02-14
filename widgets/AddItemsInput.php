@@ -22,7 +22,4 @@ class AddItemsInput extends Widget
     {
         return $this->render('addItemsInput', ['name' => $this->name]);
     }
-
 }
-
-?>

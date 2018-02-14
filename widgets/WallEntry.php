@@ -42,7 +42,7 @@ class WallEntry extends \humhub\modules\content\widgets\WallEntry
 
     public function getContextMenu()
     {
-        if(!$this->isInModal() || !$this->contentObject->content->canEdit()) {
+        if (!$this->isInModal() || !$this->contentObject->content->canEdit()) {
             return parent::getContextMenu();
         }
 
@@ -74,10 +74,9 @@ class WallEntry extends \humhub\modules\content\widgets\WallEntry
     public function getWallEntryViewParams()
     {
         $params = parent::getWallEntryViewParams();
-        if($this->isInModal()) {
+        if ($this->isInModal()) {
             $params['showContentContainer'] = true;
         }
         return $params;
     }
-
 }

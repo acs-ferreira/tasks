@@ -9,7 +9,7 @@ use yii\helpers\Html;
     at <?= substr($task->begin, 0, 5); ?> - <?= substr($task->end, 0, 5); ?>
     <?= Html::encode($task->location) ?> <?php
     if ($task->room != null) {
-        echo "(" . Html::encode($task->room) . ")";
+        echo '(' . Html::encode($task->room) . ')';
     }
     ?>
 </h2>
@@ -17,13 +17,13 @@ use yii\helpers\Html;
 <em><strong><?= Yii::t('TaskModule.views_index_index', 'Participants') ?>:</strong></em><br>
 <?php $participantCount = 0 ?>
 <?php foreach ($task->participants as $participant) : ?>
-    <?php if($participantCount != 0) : ?>
-       <?= ', ' ?>
+    <?php if ($participantCount != 0) : ?>
+        <?= ', ' ?>
     <?php endif; ?>
     <?php $user = $participant->user; ?>
-    <?php if ($user): ?>
+    <?php if ($user) : ?>
         <?= Html::encode($user->displayName); ?>
-    <?php else: ?>
+    <?php else : ?>
         <?= Html::encode($participant->name); ?>
     <?php endif; ?>
     <?php $participantCount++ ?>
@@ -37,14 +37,14 @@ use yii\helpers\Html;
 <br>
 <hr>
 
-<?php foreach ($task->items as $item): ?>
+<?php foreach ($task->items as $item) : ?>
     <h1>
-        <?php if ($item->begin != "00:00" && $item->end != "00:00") : ?>
+        <?php if ($item->begin != '00:00' && $item->end != '00:00') : ?>
             <?= Html::encode($item->getTimeRangeText()); ?> -
         <?php endif; ?>
         <?= Html::encode($item->title); ?>
     </h1>
-    <?= \humhub\widgets\MarkdownView::widget(array('markdown' => $item->description)); ?>
+    <?= \humhub\widgets\MarkdownView::widget(['markdown' => $item->description]); ?>
     <table style="border-spacing: 5px;">
         <tr>
             <td style="vertical-align: top;">
@@ -55,9 +55,9 @@ use yii\helpers\Html;
                 <?php foreach ($item->moderators as $moderator) : ?>
                     <?= ($moderatorCount != 0) ? ', ': '' ?>
                     <?php $user = $moderator->user; ?>
-                    <?php if ($user): ?>
+                    <?php if ($user) : ?>
                         <?= Html::encode($user->displayName); ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <?= Html::encode($moderator->name); ?>
                     <?php endif; ?>
                     <?php $moderatorCount++ ?>
@@ -65,7 +65,7 @@ use yii\helpers\Html;
                 <?php if ($item->external_moderators != null) : ?>
                     <?php
                     if (count($item->moderators) != 0) {
-                        echo ", ";
+                        echo ', ';
                     }
                     ?>
                     <?= $item->external_moderators; ?>
@@ -77,7 +77,7 @@ use yii\helpers\Html;
                 <td style="vertical-align: top;">
                     <strong><?= Yii::t('TaskModule.views_index_index', 'Protocol'); ?></strong>:
                 </td>
-                <td style="vertical-align: top;"><?= \humhub\widgets\MarkdownView::widget(array('markdown' => $item->notes)); ?></td>
+                <td style="vertical-align: top;"><?= \humhub\widgets\MarkdownView::widget(['markdown' => $item->notes]); ?></td>
             </tr>
         <?php endif; ?>
 
@@ -85,16 +85,16 @@ use yii\helpers\Html;
             <tr>
                 <td style="vertical-align: top;"><strong><?= Yii::t('TaskModule.views_index_index', 'Tasks'); ?></strong>:</td>
                 <td style="vertical-align: top;">
-                    <?php foreach ($item->getTasks() as $task): ?>
+                    <?php foreach ($item->getTasks() as $task) : ?>
                         <?php
-                        $taskStatus = "open";
+                        $taskStatus = 'open';
                         if ($task->status == \humhub\modules\tasks\models\Task::STATUS_FINISHED) {
-                            $taskStatus = "finished";
+                            $taskStatus = 'finished';
                         }
                         ?>
-                        <?php if ($taskStatus == "open") : ?>
+                        <?php if ($taskStatus == 'open') : ?>
                             <i class="fa fa-square-o"> </i>
-                        <?php else: ?>
+                        <?php else : ?>
                             <i class="fa fa-check-square-o"> </i>
                         <?php endif; ?>
                         - <?= $task->title; ?>
@@ -102,13 +102,13 @@ use yii\helpers\Html;
                             (
                             <?php
                             $timestamp = strtotime($task->deadline);
-                            $style = "";
+                            $style = '';
 
-                            if (date("d.m.yy", $timestamp) <= date("d.m.yy", time())) {
-                                $style = "label label-danger";
+                            if (date('d.m.yy', $timestamp) <= date('d.m.yy', time())) {
+                                $style = 'label label-danger';
                             }
                             ?>
-                            <span style="<?= $style; ?>"><?= date("d. M", $timestamp); ?></span>
+                            <span style="<?= $style; ?>"><?= date('d. M', $timestamp); ?></span>
                             )
                             
                         <?php endif; ?>
@@ -117,7 +117,7 @@ use yii\helpers\Html;
                         <?php if (count($assignedUsers) != 0) : ?>
                             &rarr
                             <?php $userCount = 0 ?>
-                            <?php foreach ($assignedUsers as $user): ?>
+                            <?php foreach ($assignedUsers as $user) : ?>
                                 <?= ($userCount == 0) ? '' : ', ' ?>
                                 <?= Html::encode($user->displayName); ?>
                                 <?php $userCount++ ?>

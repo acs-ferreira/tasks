@@ -56,5 +56,4 @@ class TaskMenu extends \yii\base\Widget
                     'canReset' => $this->task->canResetTask()
         ]);
     }
-
 }

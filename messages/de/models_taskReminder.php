@@ -1,5 +1,5 @@
 <?php
-return array (
+return  [
     'Task' => 'Aufgabe',
     'Remind Mode' => 'Hinweis',
     'Do not remind' => 'Keine Erinnerung',
@@ -11,4 +11,4 @@ return array (
     '2 Weeks before' => '2 Wochen vorher',
     '3 Weeks before' => '3 Wochen vorher',
     '1 Month before' => '1 Monat vorher',
-);
+];

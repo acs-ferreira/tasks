@@ -1,5 +1,5 @@
 <?php
-return array (
+return  [
     '{userName} requests a deadline extension for task {task} in space {spaceName}.' => '{userName} fordert eine Fristverlängerung für die Aufgabe {task} im Space {spaceName}.',
     '{userName} assigned you to task {task} in space {spaceName}.' => '{userName} hat dich der Aufgabe {task} im Space {spaceName} zugewiesen.',
     '{userName} has changed deadline for task {task} in space {spaceName}.' => '{userName} hat die Deadline für die Aufgabe {task} im Raum {spaceName} geändert.',
@@ -13,4 +13,4 @@ return array (
     'Task {task} in space {spaceName} ends at {dateTime}.' => 'Aufgabe {task} im Space {spaceName} endet am {dateTime}.',
     'Task {task} in space {spaceName} starts at {dateTime}.' => 'Aufgabe {task} im Space {spaceName} beginnt am {dateTime}.',
     'Reminder' => 'Erinnerung',
-);
+];

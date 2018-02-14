@@ -1,5 +1,5 @@
 <?php
-return array (
+return  [
     'End time must be after start time!' => 'Die Endzeit muss nach der Startzeit liegen!',
     'Start Date' => 'Startdatum',
     'End Date' => 'Enddatum',
@@ -7,4 +7,4 @@ return array (
     'End Time' => 'Endzeit',
     'Time Zone' => 'Zeitzone',
     'Public' => 'Öffentlich',
-);
+];

@@ -15,7 +15,6 @@
 
 namespace humhub\modules\task\widgets;
 
-
 use humhub\components\Widget;
 
 class TaskListEntry extends Widget
@@ -35,5 +34,4 @@ class TaskListEntry extends Widget
             'filterResult' => $this->filterResult
         ]);
     }
-
 }

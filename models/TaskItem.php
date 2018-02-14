@@ -1,11 +1,13 @@
 <?php
 namespace humhub\modules\task\models;
+
 use DateTime;
 use humhub\components\ActiveRecord;
 use Yii;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\task\permissions\ManageTasks;
 use humhub\modules\user\models\User;
+
 /**
  * This is the model class for table "task_item".
  *
@@ -103,13 +105,13 @@ class TaskItem extends ActiveRecord
 
     public static function filterValidItems($itemArr)
     {
-        if($itemArr == null) {
+        if ($itemArr == null) {
             return [];
         }
 
         $result = [];
         foreach ($itemArr as $key => $itemText) {
-            if($itemText != null && $itemText !== '') {
+            if ($itemText != null && $itemText !== '') {
                 $result[$key] = $itemText;
             }
         }

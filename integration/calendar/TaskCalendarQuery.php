@@ -56,9 +56,8 @@ class TaskCalendarQuery extends AbstractCalendarQuery
             }
 
             return $this->_query->all();
-        } catch(FilterNotSupportedException $e) {
+        } catch (FilterNotSupportedException $e) {
             return [];
         }
     }
-
 }

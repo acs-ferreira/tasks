@@ -29,9 +29,11 @@ use humhub\widgets\ModalButton;
                 </li>
                 <li>
                     <?= Link::asLink(Yii::t('TaskModule.base', 'Delete'))->action('ui.modal.post', $deleteUrl)->icon('fa-trash')
-                        ->confirm(Yii::t('TaskModule.views_index_edit', '<strong>Confirm</strong> task deletion'),
+                        ->confirm(
+                            Yii::t('TaskModule.views_index_edit', '<strong>Confirm</strong> task deletion'),
                             Yii::t('TaskModule.views_index_edit', 'Do you really want to delete this task?'),
-                            Yii::t('TaskModule.base', 'Delete'))->visible($canEdit); ?>
+                            Yii::t('TaskModule.base', 'Delete')
+                        )->visible($canEdit); ?>
                 </li>
                 <li>
                     <?= Button::asLink(Yii::t('TaskModule.views_index_index', 'Request extension'), $extensionRequestUrl)->icon('fa-clock-o')->visible($canRequestExtension);?>

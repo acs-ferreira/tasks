@@ -33,7 +33,7 @@ class RemindStart extends BaseNotification
     /**
      * @inheritdoc
      */
-    public $viewName = "remind.php";
+    public $viewName = 'remind.php';
 
     /**
      * @inheritdoc

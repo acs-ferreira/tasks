@@ -22,7 +22,7 @@ $deleteUrl = $contentContainer->createUrl('/task/index/delete', ['id' => $task->
         <?= $this->renderAjax('view', ['task' => $task])?>
     </div>
     <div class="modal-footer">
-        <?php if($canManageEntries): ?>
+        <?php if ($canManageEntries) : ?>
             <?= ModalButton::primary(Yii::t('TaskModule.base', 'Edit'))->load($editUrl)->loader(true); ?>
         <?php endif; ?>
         <?= ModalButton::cancel(Yii::t('TaskModule.base', 'Close')) ?>

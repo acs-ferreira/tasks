@@ -33,7 +33,7 @@ class RemindEnd extends BaseNotification
     /**
      * @inheritdoc
      */
-    public $viewName = "remind.php";
+    public $viewName = 'remind.php';
 
     /**
      * @inheritdoc
@@ -50,7 +50,6 @@ class RemindEnd extends BaseNotification
             '{spaceName}' => Html::tag('strong', Html::encode($this->source->content->container->displayName)),
             '{dateTime}' => Html::encode($this->source->formattedEndDateTime)
         ]);
-
     }
 
     /**

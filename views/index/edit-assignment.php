@@ -24,7 +24,7 @@ array_push($responsible, Yii::$app->user->getIdentity()); // add creator to resp
         'selection' => $taskForm->task->taskAssignedUsers,
         'url' => $taskForm->getTaskAssignedPickerUrl(),
         'placeholder' => Yii::t('TaskModule.views_index_edit', 'Assign users')
-    ])->hint(Yii::t('TaskModule.views_index_edit', 'Leave empty to let anyone work on this task.'),[]) ?>
+    ])->hint(Yii::t('TaskModule.views_index_edit', 'Leave empty to let anyone work on this task.'), []) ?>
 
     <?= Link::userPickerSelfSelect('#taskAssignedUserPicker'); ?>
 

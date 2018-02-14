@@ -50,7 +50,7 @@ class IndexController extends ContentContainerController
                 'actions' => [
                     'task-user-picker',
                     'sub-task-picker',
-                    'send-invite-notifications'.
+                    'send-invite-notifications' .
                     'edit',
                     'delete',
                     'calendar-update'
@@ -67,7 +67,7 @@ class IndexController extends ContentContainerController
     {
         $tasks = Task::findPendingTasks($this->contentContainer)->all();
 
-        return $this->render("index", [
+        return $this->render('index', [
                     'pendingTasks' => $tasks,
                     'canEdit' => $this->canEdit(),
                     'contentContainer' => $this->contentContainer,
@@ -79,15 +79,15 @@ class IndexController extends ContentContainerController
     {
         $task = Task::find()->contentContainer($this->contentContainer)->where(['task.id' => $id])->one();
 
-        if(!$task) {
+        if (!$task) {
             throw new HttpException(404);
         }
 
-        if( !$task->content->canView() && !($task->isTaskAssigned() || $task->isTaskResponsible()) ) {
+        if (!$task->content->canView() && !($task->isTaskAssigned() || $task->isTaskResponsible())) {
             throw new HttpException(403);
         }
 
-        return $this->render("task", [
+        return $this->render('task', [
                     'task' => $task,
                     'contentContainer' => $this->contentContainer
         ]);
@@ -97,11 +97,11 @@ class IndexController extends ContentContainerController
     {
         $task = Task::find()->contentContainer($this->contentContainer)->where(['task.id' => $id])->one();
 
-        if(!$task) {
+        if (!$task) {
             throw new HttpException(404);
         }
 
-        if(!$task->content->canView()) {
+        if (!$task->content->canView()) {
             throw new HttpException(403);
         }
 
@@ -115,7 +115,7 @@ class IndexController extends ContentContainerController
 
     public function actionTaskAssignedPicker($id = null, $keyword)
     {
-        if($id) {
+        if ($id) {
             $subQuery = TaskAssigned::find()->where(['task_assigned.task_id' => $id])->andWhere('task_assigned.user_id=user.id');
             $query = $this->getSpace()->getMembershipUser()->where(['not exists', $subQuery]);
         } else {
@@ -131,7 +131,7 @@ class IndexController extends ContentContainerController
 
     public function actionTaskResponsiblePicker($id = null, $keyword)
     {
-        if($id) {
+        if ($id) {
             $subQuery = TaskResponsible::find()->where(['task_responsible.task_id' => $id])->andWhere('task_responsible.user_id=user.id');
             $query = $this->getSpace()->getMembershipUser()->where(['not exists', $subQuery]);
         } else {
@@ -148,7 +148,7 @@ class IndexController extends ContentContainerController
     // Todo
     public function actionSubTaskPicker($id = null, $keyword)
     {
-        if($id) {
+        if ($id) {
             $subQuery = Task::find()->where(['task.id' => $id]);
             $query = Task::find()->where(['task.title' => $keyword])->orWhere(['task.description' => $keyword]);
 //            $query = $this->getSpace()->getMembershipUser()->where(['not exists', $subQuery]);
@@ -195,7 +195,7 @@ class IndexController extends ContentContainerController
             ]);
         }
 
-        if(!$taskForm->task) {
+        if (!$taskForm->task) {
             throw new HttpException(404);
         }
 
@@ -204,11 +204,12 @@ class IndexController extends ContentContainerController
         $taskForm->task->setEditItems(Yii::$app->request->post('items'));
 
         if ($taskForm->load(Yii::$app->request->post()) && $taskForm->save()) {
-            if($cal) {
+            if ($cal) {
                 return ModalClose::widget(['saved' => true]);
             }
-            if($newTask)
+            if ($newTask) {
                 $taskForm->task->notifyCreated();
+            }
 
             return $this->htmlRedirect($this->contentContainer->createUrl('view', ['id' => $taskForm->task->id]));
         }
@@ -223,7 +224,7 @@ class IndexController extends ContentContainerController
         $task->duplicated();
 
         // We reset the duplicate id in case this is a shift item action, so we prevent other items from beeing copied.
-        if($itemId) {
+        if ($itemId) {
             $id = null;
         }
 
@@ -241,7 +242,7 @@ class IndexController extends ContentContainerController
             throw new HttpException(404);
         }
 
-        if(!$cal) {
+        if (!$cal) {
             return $this->htmlRedirect($this->contentContainer->createUrl('index'));
         } else {
             return ModalClose::widget();
@@ -270,7 +271,7 @@ class IndexController extends ContentContainerController
             return $this->asJson(['success' => true]);
         }
 
-        throw new HttpException(400, "Could not save! " . print_r($task->getErrors()));
+        throw new HttpException(400, 'Could not save! ' . print_r($task->getErrors()));
     }
 
     // Todo
@@ -294,7 +295,7 @@ class IndexController extends ContentContainerController
             return $this->asJson(['success' => true]);
         }
 
-        throw new HttpException(400, "Could not save! " . print_r($taskForm->getErrors()));
+        throw new HttpException(400, 'Could not save! ' . print_r($taskForm->getErrors()));
     }
 
     /**
@@ -307,23 +308,22 @@ class IndexController extends ContentContainerController
     {
         $task = Task::find()->contentContainer($this->contentContainer)->where(['task.id' => $id])->one();
 
-        if(!$task) {
+        if (!$task) {
             throw new HttpException(404);
         }
 
         $taskAssigned = $task->getTaskAssigned()->where(['task_assigned.user_id' => Yii::$app->user->id])->one();
-        if(!$taskAssigned) {
+        if (!$taskAssigned) {
             throw new HttpException(404);
         }
 
-        if( !$task->content->canView() && !$task->canRequestExtension() ) {
+        if (!$task->content->canView() && !$task->canRequestExtension()) {
             throw new HttpException(401, Yii::t('TaskModule.controller', 'You have insufficient permissions to perform that operation!'));
         }
 
         if ($task->hasRequestedExtension()) {
             $this->view->error(Yii::t('TaskModule.controller', 'Already requested'));
-        }
-        else {
+        } else {
             $task->sendExtensionRequest();
             $task->updateAttributes(['request_sent' => 1]);
             $this->view->success(Yii::t('TaskModule.controller', 'Request sent'));
@@ -332,7 +332,6 @@ class IndexController extends ContentContainerController
         return $this->htmlRedirect($this->contentContainer->createUrl('view', [
             'id' => $task->id,
         ]));
-
     }
 
     /**
@@ -345,11 +344,11 @@ class IndexController extends ContentContainerController
     {
         $task = Task::find()->contentContainer($this->contentContainer)->where(['task.id' => $id])->one();
 
-        if(!$task) {
+        if (!$task) {
             throw new HttpException(404);
         }
 
-        if( !$task->content->canView() && !$task->canResetTask() ) {
+        if (!$task->content->canView() && !$task->canResetTask()) {
             throw new HttpException(401, Yii::t('TaskModule.controller', 'You have insufficient permissions to perform that operation!'));
         }
 
@@ -358,7 +357,6 @@ class IndexController extends ContentContainerController
         return $this->htmlRedirect($this->contentContainer->createUrl('view', [
             'id' => $task->id,
         ]));
-
     }
 
     /**
@@ -370,13 +368,14 @@ class IndexController extends ContentContainerController
 
         $task = $this->getTaskByParameter();
 
-        if (!$task->canCheckItems())
+        if (!$task->canCheckItems()) {
             throw new HttpException(401, Yii::t('TaskModule.controller', 'You have insufficient permissions to perform that operation!'));
+        }
 
         $items = Yii::$app->request->post('item');
 
         // Build array of answer ids
-        $results = array();
+        $results = [];
         if (is_array($items)) {
             foreach ($items as $item_id => $flag) {
                 $results[] = (int) $item_id;
@@ -388,14 +387,14 @@ class IndexController extends ContentContainerController
         $task->resetItems();
         $task->confirm($results);
 
-        if ($task->isPending())
+        if ($task->isPending()) {
             $task->changeStatus(Task::STATUS_IN_PROGRESS);
+        }
 
-        return $this->render("task", [
+        return $this->render('task', [
             'task' => $task,
             'contentContainer' => $this->contentContainer
         ]);
-
     }
 
     public function actionStatus($id, $status)
@@ -404,42 +403,42 @@ class IndexController extends ContentContainerController
 
         $task = Task::find()->contentContainer($this->contentContainer)->where(['task.id' => $id])->one();
 
-        if(!$task) {
+        if (!$task) {
             throw new HttpException(404);
         }
 
-        if(!$task->content->canView() && !$task->canChangeStatus()) {
+        if (!$task->content->canView() && !$task->canChangeStatus()) {
             throw new HttpException(403);
         }
 
-        if ($task->changeStatus($status))
+        if ($task->changeStatus($status)) {
             $this->view->success(Yii::t('TaskModule.controller', 'Saved'));
-        else
+        } else {
             $this->view->error(Yii::t('TaskModule.controller', 'Error'));
+        }
 
         return $this->redirect($this->contentContainer->createUrl('/task/index/view', ['id' => $task->id]));
-
     }
 
     public function actionRejectReview($id)
     {
         $task = Task::find()->contentContainer($this->contentContainer)->where(['task.id' => $id])->one();
 
-        if(!$task) {
+        if (!$task) {
             throw new HttpException(404);
         }
 
-        if(!$task->content->canView() && !$task->canChangeStatus()) {
+        if (!$task->content->canView() && !$task->canChangeStatus()) {
             throw new HttpException(403);
         }
 
-        if ($task->changeStatus(Task::STATUS_IN_PROGRESS))
+        if ($task->changeStatus(Task::STATUS_IN_PROGRESS)) {
             $this->view->success(Yii::t('TaskModule.controller', 'Saved'));
-        else
+        } else {
             $this->view->error(Yii::t('TaskModule.controller', 'Error'));
+        }
 
         return $this->redirect($this->contentContainer->createUrl('/task/index/view', ['id' => $task->id]));
-
     }
 
     /**
@@ -468,5 +467,4 @@ class IndexController extends ContentContainerController
     {
         return $this->contentContainer->getPermissionManager()->can(new ManageTasks());
     }
-
 }

@@ -33,7 +33,7 @@ class NotifyChangedDateTime extends BaseNotification
     /**
      * @inheritdoc
      */
-    public $viewName = "taskNotification";
+    public $viewName = 'taskNotification';
 
     /**
      * @inheritdoc

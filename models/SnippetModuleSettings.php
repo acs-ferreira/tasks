@@ -69,7 +69,7 @@ class SnippetModuleSettings extends Model
 
     public function save()
     {
-        if(!$this->validate()) {
+        if (!$this->validate()) {
             return false;
         }
 

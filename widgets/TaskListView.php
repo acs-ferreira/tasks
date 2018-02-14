@@ -15,7 +15,6 @@
 
 namespace humhub\modules\task\widgets;
 
-
 use humhub\components\Widget;
 use humhub\modules\task\models\forms\TaskFilter;
 use humhub\modules\task\models\Task;
@@ -60,5 +59,4 @@ class TaskListView extends Widget
             'layout' => "{summary}\n{items}\n<div class=\"pagination-container\">{pager}</div>"
         ]);
     }
-
 }

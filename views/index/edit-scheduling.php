@@ -12,7 +12,7 @@ use humhub\modules\task\models\TaskReminder;
 /* @var $form \humhub\widgets\ActiveForm */
 /* @var $taskForm \humhub\modules\task\models\forms\TaskForm */
 
-$taskReminder = ArrayHelper::map($taskForm->task->getTaskReminder()->all(),'id','remind_mode');
+$taskReminder = ArrayHelper::map($taskForm->task->getTaskReminder()->all(), 'id', 'remind_mode');
 
 ?>
 
@@ -49,7 +49,7 @@ $taskReminder = ArrayHelper::map($taskForm->task->getTaskReminder()->all(),'id',
     <br>
 
     <div>
-        <?= $form->field($taskForm->task, 'selectedReminders')->widget( \humhub\widgets\MultiSelectField::className(), [
+        <?= $form->field($taskForm->task, 'selectedReminders')->widget(\humhub\widgets\MultiSelectField::className(), [
                 'selection' => $taskReminder,
                 'placeholder' => Yii::t('TaskModule.views_index_edit', 'Add reminder'),
                 'items' => $taskForm->getRemindModeItems(),

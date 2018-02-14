@@ -44,5 +44,4 @@ class MyTasks extends Widget
 
         return $this->render('myTasks', ['taskEntries' => $taskEntries]);
     }
-
 }

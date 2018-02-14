@@ -80,7 +80,7 @@ $editUrl = $contentContainer->createUrl('edit', ['id' => $task->id]);
             <?= WallEntryAddons::widget([
                 'object' => $task
             ]); ?>
-        <?php else: ?>
+        <?php else : ?>
             <br>
         <?php endif; ?>
     </div>

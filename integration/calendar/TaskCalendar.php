@@ -49,7 +49,7 @@ class TaskCalendar extends Object
      */
     public static function addItems($event)
     {
-       $tasks = TaskCalendarQuery::findForEvent($event);
+        $tasks = TaskCalendarQuery::findForEvent($event);
 
         $items = [];
         foreach ($tasks as $task) {
@@ -58,5 +58,4 @@ class TaskCalendar extends Object
 
         $event->addItems(static::ITEM_TYPE_KEY, $items);
     }
-
 }

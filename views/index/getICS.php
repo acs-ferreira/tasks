@@ -5,28 +5,29 @@ if (class_exists('yii\debug\Module')) {
 }
 ?>
 <?php
-$link = $contentContainer->createUrl('/task/index/view', array('id' => $task->id), true);
+$link = $contentContainer->createUrl('/task/index/view', ['id' => $task->id], true);
 $uid = uniqid();
 $title = $task->title;
-$description = Yii::t('TaskModule.views_index_getICS', 'Task details: %link%', array('%link%' => $link));
-$location = $task->location . " " . $task->room;
+$description = Yii::t('TaskModule.views_index_getICS', 'Task details: %link%', ['%link%' => $link]);
+$location = $task->location . ' ' . $task->room;
 $organizer = $task->content->user->displayName;
 $organizerMail = $task->content->user->email;
-$begin = Yii::$app->formatter->asDate($task->date, "yyyyMMdd") . "T" . Yii::$app->formatter->asTime($task->begin, "HHmmss");
-$end = Yii::$app->formatter->asDate($task->date, "yyyyMMdd") . "T" . Yii::$app->formatter->asTime($task->end, "HHmmss");
+$begin = Yii::$app->formatter->asDate($task->date, 'yyyyMMdd') . 'T' . Yii::$app->formatter->asTime($task->begin, 'HHmmss');
+$end = Yii::$app->formatter->asDate($task->date, 'yyyyMMdd') . 'T' . Yii::$app->formatter->asTime($task->end, 'HHmmss');
 
-$attendee = "";
+$attendee = '';
 foreach ($task->participants as $participant) {
-    if ($participant->user->id == $task->content->user->id)
+    if ($participant->user->id == $task->content->user->id) {
         continue;
-    $attendee .= "ATTENDEE;CN=" . $participant->user->displayName . ":MAILTO:" . $participant->user->email . "\n";
+    }
+    $attendee .= 'ATTENDEE;CN=' . $participant->user->displayName . ':MAILTO:' . $participant->user->email . "\n";
 }
 ?>
 <?php
 header('Content-type: text/calendar; charset=utf-8');
 header('Content-Disposition: attachment; filename="' . $title . '.ics"');
 ?>
-<?php if ($type == "private") : ?>
+<?php if ($type == 'private') : ?>
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:<?php echo $link; ?> 

@@ -7,12 +7,13 @@
     <!--    Progress Bar    -->
     <?php
     $percent = round($task->getPercent());
-    if ($filterResult)
-        $divID = "task_progress_" . $task->id . "_filter";
-    else
-        $divID = "task_progress_" . $task->id;
+    if ($filterResult) {
+        $divID = 'task_progress_' . $task->id . '_filter';
+    } else {
+        $divID = 'task_progress_' . $task->id;
+    }
 
-    $color = "progress-bar-info";
+    $color = 'progress-bar-info';
     ?>
     <div class="col-md-6" style="padding-left: 0; padding-right: 30px;">
     <div class="progress">

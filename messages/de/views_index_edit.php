@@ -1,5 +1,5 @@
 <?php
-return array (
+return  [
     'Basic' => 'Allgemein',
     'Scheduling' => 'Zeitplanung',
     'Checklist' => 'Checkliste',
@@ -29,4 +29,4 @@ return array (
     '<strong>Create</strong> new task' => '<strong>Erstelle</strong> neue Aufgabe',
     '<strong>Edit</strong> task' => '<strong>Bearbeite</strong> Aufgabe',
 
-);
+];

@@ -120,7 +120,7 @@ class TaskReminder extends ActiveRecord
 
     public function getRemindMode()
     {
-        switch ($this->remind_mode){
+        switch ($this->remind_mode) {
             case (self::REMIND_NONE):
                 return Yii::t('TaskModule.models_taskReminder', 'Do not remind');
                 break;
@@ -155,8 +155,9 @@ class TaskReminder extends ActiveRecord
 
     public function canSendRemind(DateTime $now, DateTime $dateTime)
     {
-        if ($now === '' || $dateTime === '')
+        if ($now === '' || $dateTime === '') {
             return false;
+        }
 
         $modifiedTime = clone $dateTime;
         $modifiedEnd = clone $dateTime;
@@ -228,10 +229,11 @@ class TaskReminder extends ActiveRecord
 //        echo ('true = '. ($dateTime > $now && $modifiedTime <= $now));
 //        die();
 
-        if ($modifiedEnd > $now && $modifiedTime <= $now)
+        if ($modifiedEnd > $now && $modifiedTime <= $now) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     public function handleRemind(DateTime $now, Task $task)
@@ -244,8 +246,9 @@ class TaskReminder extends ActiveRecord
                 return true;
             }
         }
-        if ($task->getStartDateTime() < $now)
+        if ($task->getStartDateTime() < $now) {
             $this->updateAttributes(['start_reminder_sent' => 1]);
+        }
 
         if (!$this->end_reminder_sent) {
             if (self::canSendRemind($now, $task->getEndDateTime())) {
@@ -254,8 +257,9 @@ class TaskReminder extends ActiveRecord
                 return true;
             }
         }
-        if ($task->getEndDateTime() < $now)
+        if ($task->getEndDateTime() < $now) {
             $this->updateAttributes(['end_reminder_sent' => 1]);
+        }
 
         return false;
     }

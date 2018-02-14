@@ -43,12 +43,13 @@ $task = $taskForm->task;
         <?= ModalButton::submitModal($taskForm->getSubmitUrl()); ?>
         <?= ModalButton::cancel(); ?>
         </div>
-        <?php if (!$taskForm->task->isNewRecord): ?>
+        <?php if (!$taskForm->task->isNewRecord) : ?>
             <div class="col-md-4 text-right">
                 <?= Button::danger(Yii::t('TaskModule.base', 'Delete'))->confirm(
                     Yii::t('TaskModule.views_index_edit', '<strong>Confirm</strong> task deletion'),
                     Yii::t('TaskModule.views_index_edit', 'Do you really want to delete this task?'),
-                    Yii::t('TaskModule.base', 'Delete'))->action('ui.modal.post', $taskForm->getDeleteUrl()); ?>
+                    Yii::t('TaskModule.base', 'Delete')
+                )->action('ui.modal.post', $taskForm->getDeleteUrl()); ?>
             </div>
         <?php endif; ?>
     </div>

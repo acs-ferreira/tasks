@@ -1,5 +1,5 @@
 <?php
-return array (
+return  [
     'Task' => 'Aufgabe',
     'Title' => 'Titel',
     'Color' => 'Farbe',
@@ -20,4 +20,4 @@ return array (
     'Don\'t add to calendar' => 'Nicht zum Kalender hinzufügen',
     'Add Deadline to space calendar' => 'Deadline im Space-Kalender hinzufügen',
     'Deadline: ' => 'Deadline: '
-);
+];

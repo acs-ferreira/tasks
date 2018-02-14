@@ -23,4 +23,3 @@ return [
         ['class' => 'humhub\modules\calendar\interfaces\CalendarService', 'event' => 'findItems', 'callback' => ['humhub\modules\task\Events', 'onFindCalendarItems']],
     ]
 ];
-?>

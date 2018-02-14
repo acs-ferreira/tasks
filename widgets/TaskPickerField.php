@@ -16,19 +16,20 @@ class TaskPickerField extends BasePickerField
 {
 
     /**
-     * @inheritdoc 
+     * @inheritdoc
      */
     public $defaultRoute = '/task/search/json';
     
     /**
-     * @inheritdoc 
+     * @inheritdoc
      */
 //    public $jsWidget = 'task.picker.TaskModule';
 
     /**
-     * @inheritdoc 
+     * @inheritdoc
      */
-    public function init() {
+    public function init()
+    {
         $this->itemClass = \humhub\modules\task\models\Task::className();
         $this->itemKey = 'id';
     }
@@ -51,7 +52,7 @@ class TaskPickerField extends BasePickerField
     }
 
     /**
-     * @inheritdoc 
+     * @inheritdoc
      */
     protected function getData()
     {
@@ -59,7 +60,7 @@ class TaskPickerField extends BasePickerField
         $allowMultiple = $this->maxSelection !== 1;
         $result['placeholder'] = ($this->placeholder != null) ? $this->placeholder : Yii::t('TaskModule.widgets_TaskPickerField', 'Select {n,plural,=1{task} other{tasks}}', ['n' => ($allowMultiple) ? 2 : 1]);
         
-        if($this->placeholder && !$this->placeholderMore) {
+        if ($this->placeholder && !$this->placeholderMore) {
             $result['placeholder-more'] = $this->placeholder;
         } else {
             $result['placeholder-more'] = ($this->placeholderMore) ? $this->placeholderMore : Yii::t('TaskModule.widgets_TaskPickerField', 'Add more...');
@@ -74,7 +75,7 @@ class TaskPickerField extends BasePickerField
     }
 
     /**
-     * @inheritdoc 
+     * @inheritdoc
      */
     protected function getItemText($item)
     {

@@ -203,7 +203,7 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
     {
         if (!$user && !Yii::$app->user->isGuest) {
             $user = Yii::$app->user->getIdentity();
-        } else if (!$user) {
+        } elseif (!$user) {
             return [];
         }
 
@@ -246,8 +246,8 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
             $this->all_day = 1;
         }
         if (!$this->scheduling) {
-            $this->start_datetime = new Expression("NULL");
-            $this->end_datetime = new Expression("NULL");
+            $this->start_datetime = new Expression('NULL');
+            $this->end_datetime = new Expression('NULL');
         }
 
         if ($this->isAttributeChanged('start_datetime', true) || $this->isAttributeChanged('end_datetime', true)) {
@@ -364,7 +364,7 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
     {
         if (!$user && !Yii::$app->user->isGuest) {
             $user = Yii::$app->user->getIdentity();
-        } else if (!$user) {
+        } elseif (!$user) {
             return false;
         }
 
@@ -427,7 +427,7 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
     {
         if (!$user && !Yii::$app->user->isGuest) {
             $user = Yii::$app->user->getIdentity();
-        } else if (!$user) {
+        } elseif (!$user) {
             return false;
         }
 
@@ -552,13 +552,14 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
 
     public function updateItems()
     {
-        if (!isset($this->editItems))
+        if (!isset($this->editItems)) {
             return;
+        }
 
         foreach ($this->items as $item) {
             if (!array_key_exists($item->id, $this->editItems)) {
                 $item->delete();
-            } else if ($item->title !== $this->editItems[$item->id]) {
+            } elseif ($item->title !== $this->editItems[$item->id]) {
                 $item->title = $this->editItems[$item->id];
                 $item->update();
             }
@@ -590,7 +591,7 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      * @param array $items
      * @throws \yii\db\Exception
      */
-    public function confirm($items = array())
+    public function confirm($items = [])
     {
         foreach ($items as $itemID) {
             $item = TaskItem::findOne(['id' => $itemID, 'task_id' => $this->id]);
@@ -636,32 +637,36 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function changeStatus($newStatus)
     {
-        if (!in_array($newStatus, self::$statuses))
+        if (!in_array($newStatus, self::$statuses)) {
             return false;
+        }
 
         switch ($newStatus) {
-
             case Task::STATUS_PENDING:
-                if (!(self::isCompleted()))
+                if (!(self::isCompleted())) {
                     return false;
+                }
                 self::notifyReset();
                 break;
             case Task::STATUS_IN_PROGRESS:
-                if (self::isPendingReview())
+                if (self::isPendingReview()) {
                     self::notifyRejectedReview();
-                elseif (self::isPending())
+                } elseif (self::isPending()) {
                     self::notifyInProgress();
-                else
+                } else {
                     return false;
+                }
                 break;
             case Task::STATUS_PENDING_REVIEW:
-                if (!$this->review || !(self::isInProgress()))
+                if (!$this->review || !(self::isInProgress())) {
                     return false;
+                }
                 self::notifyPendingReview();
                 break;
             case Task::STATUS_COMPLETED:
-                if (!(self::isInProgress() || self::isPendingReview()))
+                if (!(self::isInProgress() || self::isPendingReview())) {
                     return false;
+                }
                 if ($this->hasItems()) {
                     $this->completeItems();
                 }
@@ -734,10 +739,11 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
                 $statusLink = $this->content->container->createUrl('/task/index/status', ['id' => $this->id, 'status' => self::STATUS_IN_PROGRESS]);
                 break;
             case self::STATUS_IN_PROGRESS:
-                if ($this->review)
+                if ($this->review) {
                     $statusLink = $this->content->container->createUrl('/task/index/status', ['id' => $this->id, 'status' => self::STATUS_PENDING_REVIEW]);
-                else
+                } else {
                     $statusLink = $this->content->container->createUrl('/task/index/status', ['id' => $this->id, 'status' => self::STATUS_COMPLETED]);
+                }
                 break;
             case self::STATUS_PENDING_REVIEW:
                 $statusLink = $this->content->container->createUrl('/task/index/status', ['id' => $this->id, 'status' => self::STATUS_COMPLETED]);
@@ -760,10 +766,11 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
                 $statusLabel = Yii::t('TaskModule.views_index_index', 'Begin Task');
                 break;
             case Task::STATUS_IN_PROGRESS:
-                if ($this->review)
+                if ($this->review) {
                     $statusLabel = Yii::t('TaskModule.views_index_index', 'Let Task Review');
-                else
+                } else {
                     $statusLabel = Yii::t('TaskModule.views_index_index', 'Finish Task');
+                }
                 break;
             case Task::STATUS_PENDING_REVIEW:
                 $statusLabel = Yii::t('TaskModule.views_index_index', 'Finish Task');
@@ -781,8 +788,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function getRejectReviewLink()
     {
-        if (self::isPendingReview() && self::canReviewTask())
+        if (self::isPendingReview() && self::canReviewTask()) {
             return $this->content->container->createUrl('/task/index/reject-review', ['id' => $this->id]);
+        }
         return '';
     }
 
@@ -792,8 +800,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function getRejectReviewLabel()
     {
-        if (self::isPendingReview() && self::canReviewTask())
+        if (self::isPendingReview() && self::canReviewTask()) {
             return Yii::t('TaskModule.views_index_index', 'Reject review');
+        }
         return '';
     }
 
@@ -832,10 +841,12 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function remindUserOfStart()
     {
-        if (self::hasTaskAssigned())
+        if (self::hasTaskAssigned()) {
             RemindStart::instance()->from($this->content->user)->about($this)->sendBulk(self::filterResponsibleAssigned());
-        if (self::hasTaskResponsible())
+        }
+        if (self::hasTaskResponsible()) {
             RemindStart::instance()->from($this->content->user)->about($this)->sendBulk($this->taskResponsibleUsers);
+        }
     }
 
     /**
@@ -843,10 +854,12 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function remindUserOfEnd()
     {
-        if (self::hasTaskAssigned())
+        if (self::hasTaskAssigned()) {
             RemindEnd::instance()->from($this->content->user)->about($this)->sendBulk(self::filterResponsibleAssigned());
-        if (self::hasTaskResponsible())
+        }
+        if (self::hasTaskResponsible()) {
             RemindEnd::instance()->from($this->content->user)->about($this)->sendBulk($this->taskResponsibleUsers);
+        }
     }
 
     /**
@@ -855,8 +868,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function sendExtensionRequest()
     {
-        if ($this->hasTaskResponsible())
+        if ($this->hasTaskResponsible()) {
             ExtensionRequest::instance()->from(Yii::$app->user->getIdentity())->about($this)->sendBulk($this->taskResponsibleUsers);
+        }
     }
 
     /**
@@ -880,11 +894,13 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function notifyReset()
     {
-        if ($this->hasTaskAssigned())
+        if ($this->hasTaskAssigned()) {
             NotifyStatusReset::instance()->from(Yii::$app->user->getIdentity())->about($this)->sendBulk(self::filterResponsibleAssigned());
+        }
 
-        if ($this->hasTaskResponsible())
+        if ($this->hasTaskResponsible()) {
             NotifyStatusReset::instance()->from(Yii::$app->user->getIdentity())->about($this)->sendBulk($this->taskResponsibleUsers);
+        }
     }
 
     /**
@@ -893,8 +909,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function notifyInProgress()
     {
-        if ($this->hasTaskResponsible())
+        if ($this->hasTaskResponsible()) {
             NotifyStatusInProgress::instance()->from(Yii::$app->user->getIdentity())->about($this)->sendBulk($this->taskResponsibleUsers);
+        }
     }
 
     /**
@@ -903,8 +920,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function notifyPendingReview()
     {
-        if ($this->review && $this->hasTaskResponsible())
+        if ($this->review && $this->hasTaskResponsible()) {
             NotifyStatusPendingReview::instance()->from(Yii::$app->user->getIdentity())->about($this)->sendBulk($this->taskResponsibleUsers);
+        }
     }
 
     /**
@@ -912,10 +930,11 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function notifyCompleted()
     {
-        if ($this->review && $this->hasTaskAssigned())
+        if ($this->review && $this->hasTaskAssigned()) {
             NotifyStatusCompletedAfterReview::instance()->from(Yii::$app->user->getIdentity())->about($this)->sendBulk(self::filterResponsibleAssigned());
-        elseif ($this->hasTaskResponsible())
+        } elseif ($this->hasTaskResponsible()) {
             NotifyStatusCompleted::instance()->from(Yii::$app->user->getIdentity())->about($this)->sendBulk($this->taskResponsibleUsers);
+        }
     }
 
     /**
@@ -925,8 +944,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function notifyRejectedReview()
     {
-        if ($this->review && $this->hasTaskAssigned())
+        if ($this->review && $this->hasTaskAssigned()) {
             NotifyStatusRejectedAfterReview::instance()->from(Yii::$app->user->getIdentity())->about($this)->sendBulk(self::filterResponsibleAssigned());
+        }
     }
 
 
@@ -966,7 +986,7 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
     {
         $end = $this->getEndDateTime();
 
-        if(!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             Yii::$app->formatter->timeZone = Yii::$app->user->getIdentity()->time_zone;
         }
 
@@ -1005,8 +1025,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function getBadge()
     {
-        if (self::isOverdue())
+        if (self::isOverdue()) {
             return Label::danger(Yii::t('TaskModule.views_index_index', 'Overdue'))->icon('fa fa-exclamation-triangle')->options(['style' => 'margin-right: 3px;'])->right();
+        }
 
         return null;
     }
@@ -1075,14 +1096,13 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
             Yii::$app->formatter->timeZone = $timeZone;
         }
 
-        if (!$this->scheduling)
+        if (!$this->scheduling) {
             $result = Yii::t('TaskModule.views_index_index', 'No Scheduling set for this Task');
-        else {
+        } else {
             $result = Yii::t('TaskModule.views_index_index', 'Deadline at');
             if ($this->all_day) {
                 $result .= ' ' . Yii::$app->formatter->asDate($this->getEndDateTime(), $format);
-            }
-            else {
+            } else {
                 $result .= ' ' . Yii::$app->formatter->asDatetime($this->getEndDateTime(), $format);
             }
         }
@@ -1123,8 +1143,8 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function getSearchAttributes()
     {
-        $itemTitles = "";
-        $itemDescriptions = "";
+        $itemTitles = '';
+        $itemDescriptions = '';
 
         foreach ($this->items as $item) {
             $itemTitles .= $item->title;
@@ -1187,14 +1207,15 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     protected function resetDateTimes()
     {
-        if (!$this->scheduling)
+        if (!$this->scheduling) {
             return;
+        }
 
         // calculate duration between start and end
         $newStart = $this->getStartDateTime();
         $interval = $newStart->diff($this->getEndDateTime());
 
-        $newStart->setDate(date("Y"), date("m"), date("d"));
+        $newStart->setDate(date('Y'), date('m'), date('d'));
 
         $temp = clone $newStart;
         $newEnd = $temp->add($interval);
@@ -1235,8 +1256,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function canRequestExtension()
     {
-        if (!$this->scheduling)
+        if (!$this->scheduling) {
             return false;
+        }
         return ((!self::isTaskResponsible() && self::hasTaskResponsible() && (self::isTaskAssigned() || self::canAnyoneProcessTask()) && (!(self::isCompleted() || self::isPending())) && (!self::hasRequestedExtension())));
     }
 
@@ -1264,10 +1286,11 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
      */
     public function canSeeStatusButton()
     {
-        if (self::isCompleted())
+        if (self::isCompleted()) {
             return false;
-        elseif ($this->review && self::isPendingReview())
+        } elseif ($this->review && self::isPendingReview()) {
             return self::canReviewTask();
+        }
         return self::canChangeStatus();
     }
 
@@ -1300,19 +1323,21 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
         if ($this->review) {
             $denominator += 1;
         }
-        if ($denominator == 0)
+        if ($denominator == 0) {
             return 0;
+        }
 
 
         $counter = $this->getConfirmedCount();
-        if (self::isInProgress())
+        if (self::isInProgress()) {
             $counter += 1;
-        elseif (self::isCompleted() && !$this->review)
+        } elseif (self::isCompleted() && !$this->review) {
             $counter += 2;
-        elseif (self::isPendingReview() && $this->review)
+        } elseif (self::isPendingReview() && $this->review) {
             $counter += 2;
-        elseif (self::isCompleted() && $this->review)
+        } elseif (self::isCompleted() && $this->review) {
             $counter += 3;
+        }
 
         return $counter / $denominator * 100;
     }
@@ -1343,8 +1368,9 @@ class Task extends ContentActiveRecord implements Searchable, CalendarItem
                 break;
         }
 
-        if (self::isOverdue())
+        if (self::isOverdue()) {
             $labels[] = Label::danger(Yii::t('TaskModule.views_index_index', 'Overdue'))->icon('fa fa-exclamation-triangle')->sortOrder(360);
+        }
 
         return parent::getLabels($labels, $includeContentName);
     }

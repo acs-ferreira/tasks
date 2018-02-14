@@ -27,7 +27,7 @@ $module = Yii::$app->getModule('task');
                          style="border-radius: 4px;"
                          border="0" hspace="0" vspace="0"/>
                 </a>
-            <?php elseif ($originator ) : ?>
+            <?php elseif ($originator) : ?>
                 <?= humhub\widgets\mails\MailContentContainerImage::widget(['container' => $originator]); ?>
             <?php endif; ?>
 
@@ -48,7 +48,7 @@ $module = Yii::$app->getModule('task');
                                     <?= \humhub\widgets\TimeAgo::widget(['timestamp' => $date]) ?>
                                 </span>
                             <?php endif; ?>
-                             <?php if ($space) : ?>
+                                <?php if ($space) : ?>
                                 <span style="font-size: 11px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:<?= Yii::$app->view->theme->variable('text-color-soft', '#bebebe') ?>; font-weight:300; text-align:left;">
                                     <?= Yii::t('ContentModule.views_wallLayout', 'in'); ?>
                                 </span>
@@ -57,7 +57,7 @@ $module = Yii::$app->getModule('task');
                                         <?= Html::encode($space->displayName) ?>
                                     </a>
                                 </span>
-                            <?php endif; ?>
+                                <?php endif; ?>
                         </td>
                     </tr>
                     <tr>
@@ -81,7 +81,7 @@ $module = Yii::$app->getModule('task');
                                     <?= \humhub\widgets\TimeAgo::widget(['timestamp' => $date]) ?>
                                 </span>
                             <?php endif; ?>
-                             <?php if ($space) : ?>
+                                <?php if ($space) : ?>
                                 <span style="font-size: 11px; line-height: 22px; font-family:Open Sans,Arial,Tahoma, Helvetica, sans-serif; color:<?= Yii::$app->view->theme->variable('text-color-soft', '#bebebe') ?>; font-weight:300; text-align:left;">
                                     <?= Yii::t('ContentModule.views_wallLayout', 'in'); ?>
                                 </span>
@@ -90,7 +90,7 @@ $module = Yii::$app->getModule('task');
                                         <?= Html::encode($space->displayName) ?>
                                     </a>
                                 </span>
-                            <?php endif; ?>
+                                <?php endif; ?>
                         </td>
                     </tr>
                     <tr>

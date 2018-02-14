@@ -7,7 +7,7 @@
 ?>
 
 <div class="modal-body">
-     <?php foreach ($taskForm->task->items as $item) :?>
+        <?php foreach ($taskForm->task->items as $item) :?>
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" name="items[<?= $item->id ?>]"

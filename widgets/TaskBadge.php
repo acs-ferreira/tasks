@@ -15,7 +15,6 @@
 
 namespace humhub\modules\task\widgets;
 
-
 use humhub\components\Widget;
 use humhub\modules\task\models\Task;
 
@@ -38,5 +37,4 @@ class TaskBadge extends Widget
             'right' => $this->right
         ]);
     }
-
 }

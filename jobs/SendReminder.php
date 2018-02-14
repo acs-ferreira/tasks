@@ -29,8 +29,9 @@ class SendReminder extends ActiveJob
             if ($task->hasTaskReminder()) {
                 $reminderSent = false;  // only send one reminder per run per task
                 foreach ($task->taskReminder as $reminder) {
-                    if ($reminderSent)
+                    if ($reminderSent) {
                         continue;
+                    }
                     $reminderSent = $reminder->handleRemind($now, $task);
                 }
             }

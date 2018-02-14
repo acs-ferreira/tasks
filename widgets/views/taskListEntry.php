@@ -22,8 +22,7 @@ $color = $task->color ? $task->color : $this->theme->variable('info');
             <h5>
                 <?= $task->getFormattedDateTime() ?>
                 <?= \humhub\widgets\Button::primary()
-                ->options(['class' => 'tt', 'title' => Yii::t('TaskModule.views_index_index', 'Edit'), 'style' => 'margin-left:2px']
-                )->icon('fa-pencil')->right()->xs()->action('ui.modal.load', $editUrl)->loader(false)->visible($canEdit) ?>
+                ->options(['class' => 'tt', 'title' => Yii::t('TaskModule.views_index_index', 'Edit'), 'style' => 'margin-left:2px'])->icon('fa-pencil')->right()->xs()->action('ui.modal.load', $editUrl)->loader(false)->visible($canEdit) ?>
             </h5>
                 <?= \humhub\modules\task\widgets\TaskPercentageBar::widget(['task' => $task, 'filterResult' => $filterResult])?>
         </div>

@@ -17,7 +17,7 @@ use humhub\modules\task\models\SnippetModuleSettings;
 use yii\web\HttpException;
 
 /**
- * 
+ *
  */
 class ConfigController extends Controller
 {

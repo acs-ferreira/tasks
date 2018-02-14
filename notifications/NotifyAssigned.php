@@ -32,7 +32,7 @@ class NotifyAssigned extends BaseNotification
     /**
      * @inheritdoc
      */
-    public $viewName = "taskNotification";
+    public $viewName = 'taskNotification';
 
     /**
      *  @inheritdoc
@@ -42,7 +42,8 @@ class NotifyAssigned extends BaseNotification
         return new TaskNotificationCategory();
     }
     
-    public function html() {
+    public function html()
+    {
         return Yii::t('TaskModule.notifications', '{userName} assigned you to task {task} in space {spaceName}.', [
             '{userName}' => Html::tag('strong', Html::encode($this->originator->displayName)),
             '{task}' => Html::tag('strong', Html::encode($this->getContentInfo($this->source, false))),

@@ -40,7 +40,7 @@ $emptyText = ($canEdit) ? Yii::t('TaskModule.views_index_index', 'Start now, by 
     <?php else : ?>
         <div class="panel-body">
             <ul class="media-list">
-                <?php foreach ($pendingTasks as $task): ?>
+                <?php foreach ($pendingTasks as $task) : ?>
                     <li>
                         <?= TaskListEntry::widget(['task' => $task, 'contentContainer' => $contentContainer, 'canEdit' => $canEdit]) ?>
                     </li>

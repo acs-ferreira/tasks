@@ -8,7 +8,6 @@
 
 namespace humhub\modules\task\widgets;
 
-
 use humhub\modules\task\models\Task;
 use humhub\modules\task\models\TaskItem;
 use humhub\modules\user\models\fieldtype\DateTime;

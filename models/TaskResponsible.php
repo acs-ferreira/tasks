@@ -60,5 +60,4 @@ class TaskResponsible extends ActiveRecord
     {
         return $this->hasOne(Task::class, ['id' => 'task_id']);
     }
-
 }

@@ -15,15 +15,15 @@
 use \humhub\modules\task\models\Task;
 use \yii\helpers\Html;
 
-$this->registerJsFile("@web-static/js/jquery.highlight.min.js");
-$this->registerJsFile("@web-static/resources/task/taskpicker.js");
+$this->registerJsFile('@web-static/js/jquery.highlight.min.js');
+$this->registerJsFile('@web-static/resources/task/taskpicker.js');
 ?>
 
 <?php
 // Resolve guids to task tags
-$newValue = "";
+$newValue = '';
 
-foreach (explode(",", $currentValue) as $guid) {
+foreach (explode(',', $currentValue) as $guid) {
     $task = Task::findOne(['id' => trim($guid)]);
     if ($task != null) {
         $name = Html::encode($task->title);

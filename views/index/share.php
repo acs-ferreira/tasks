@@ -32,7 +32,7 @@ $sharePrivateUrl = $contentContainer->createUrl('get-ics', ['id' => $task->id, '
                     <?= ModalButton::info(Yii::t('TaskModule.views_index_share', 'Export ICS'))->link($sharePrivateUrl, false)->close(); ?>
                 </div>
             </div>
-            <?php if ($canEdit): ?>
+            <?php if ($canEdit) : ?>
                 <hr>
                 <div class="row">
                     <div class="col-md-8">
@@ -50,7 +50,7 @@ $sharePrivateUrl = $contentContainer->createUrl('get-ics', ['id' => $task->id, '
                         <?= Yii::t('TaskModule.views_index_share', 'Sends internal notifications to all participants of the task.'); ?>
                     </div>
                     <div class="col-md-4 text-right">
-                        <?= Button::info(Yii::t('TaskModule.views_index_share', 'Send now'))->action('task.sendNotification',  $notificationUrl)?>
+                        <?= Button::info(Yii::t('TaskModule.views_index_share', 'Send now'))->action('task.sendNotification', $notificationUrl)?>
                     </div>
                 </div>
             <?php endif; ?>

@@ -8,5 +8,4 @@
 use humhub\modules\task\widgets\TaskListEntry;
 
 ?>
-<?= TaskListEntry::widget(['task' => $model, 'contentContainer' => $contentContainer, 'canEdit' => $canEdit, 'filterResult' => true])?>
-
+<?= TaskListEntry::widget(['task' => $model, 'contentContainer' => $contentContainer, 'canEdit' => $canEdit, 'filterResult' => true]);

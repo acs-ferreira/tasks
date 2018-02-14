@@ -33,7 +33,7 @@ class ExtensionRequest extends BaseNotification
     /**
      * @inheritdoc
      */
-    public $viewName = "taskNotification";
+    public $viewName = 'taskNotification';
 
     /**
      * @inheritdoc

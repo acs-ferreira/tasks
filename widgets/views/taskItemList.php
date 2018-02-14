@@ -18,9 +18,9 @@ $divOptions = $options;
 $divOptions['class'] = 'row';
 
 ?>
-<div class="<?= (count($items)) ? "task-item-container" : '' ?>">
+<div class="<?= (count($items)) ? 'task-item-container' : '' ?>">
     <?= Html::beginTag('div', $divOptions) ?>
-    <?php foreach ($items as $item): ?>
+    <?php foreach ($items as $item) : ?>
         <?= TaskItemWidget::widget(['item' => $item, 'task' => $task]); ?>
     <?php endforeach; ?>
     <?= Html::endTag('div') ?>

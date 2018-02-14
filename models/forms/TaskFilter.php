@@ -15,7 +15,6 @@
 
 namespace humhub\modules\task\models\forms;
 
-
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\task\models\Task;
 use humhub\modules\task\models\TaskAssigned;
@@ -87,16 +86,16 @@ class TaskFilter extends Model
 
         $query = Task::findReadable($this->contentContainer);
 
-        if($this->overdue) {
+        if ($this->overdue) {
             $query->andWhere('task.end_datetime < DATE(NOW())');
             $query->andWhere(['!=', 'task.status', Task::STATUS_COMPLETED]);
         }
 
-        if($this->status != Task::STATUS_ALL) {
+        if ($this->status != Task::STATUS_ALL) {
             $query->andWhere(['task.status' => $this->status]);
         }
 
-        if(!empty($this->title)) {
+        if (!empty($this->title)) {
             $query->andWhere(['like', 'title', $this->title]);
         }
 
@@ -114,7 +113,7 @@ class TaskFilter extends Model
             $query->andWhere(['exists', $subQuery]);
         }
 
-        if($this->own) {
+        if ($this->own) {
             $query->andWhere(['content.created_by' => $user->contentcontainer_id]);
         }
 
